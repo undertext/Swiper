@@ -1736,7 +1736,7 @@ var Swiper = function (selector, params) {
         if (params.slidesPerView === 'auto') {
             for (var i = 0; i < _this.snapGrid.length; i++) {
                 if (-currentPosition >= _this.snapGrid[i] && -currentPosition < _this.snapGrid[i + 1]) {
-                    newPosition = -_this.snapGrid[i + 1];
+                    newPosition = -_this.snapGrid[i + _this.fullVisibleSlides.length];
                     break;
                 }
             }
@@ -1763,7 +1763,7 @@ var Swiper = function (selector, params) {
             newPosition = 0;
             for (var i = 1; i < _this.snapGrid.length; i++) {
                 if (-currentPosition === _this.snapGrid[i]) {
-                    newPosition = -_this.snapGrid[i - 1];
+                    newPosition = -_this.snapGrid[i - _this.fullVisibleSlides.length];
                     break;
                 }
                 if (-currentPosition > _this.snapGrid[i] && -currentPosition < _this.snapGrid[i + 1]) {
@@ -2147,6 +2147,7 @@ var Swiper = function (selector, params) {
     };
     _this.calcVisibleSlides = function (position) {
         var visibleSlides = [];
+        var fullVisibleSlides = [];
         var _slideLeft = 0, _slideSize = 0, _slideRight = 0;
         if (isH && _this.wrapperLeft > 0) position = position + _this.wrapperLeft;
         if (!isH && _this.wrapperTop > 0) position = position + _this.wrapperTop;
@@ -2167,6 +2168,10 @@ var Swiper = function (selector, params) {
                 if (_slideRight > -position && _slideRight <= ((-position + containerSize))) isVisibile = true;
                 if (_slideLeft >= -position && _slideLeft < ((-position + containerSize))) isVisibile = true;
                 if (_slideLeft < -position && _slideRight > ((-position + containerSize))) isVisibile = true;
+                if (_slideLeft >= -position && _slideLeft < ((-position + containerSize)) && _slideRight <= ((-position + containerSize))
+                  ||(_slideRight > -position && _slideRight <= ((-position + containerSize)))) {
+                    fullVisibleSlides.push(_this.slides[i]);
+                }
             }
 
             if (isVisibile) visibleSlides.push(_this.slides[i]);
@@ -2175,6 +2180,7 @@ var Swiper = function (selector, params) {
         if (visibleSlides.length === 0) visibleSlides = [_this.slides[_this.activeIndex]];
 
         _this.visibleSlides = visibleSlides;
+        _this.fullVisibleSlides = fullVisibleSlides;
     };
 
     /*==========================================
