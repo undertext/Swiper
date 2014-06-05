@@ -2168,8 +2168,7 @@ var Swiper = function (selector, params) {
                 if (_slideRight > -position && _slideRight <= ((-position + containerSize))) isVisibile = true;
                 if (_slideLeft >= -position && _slideLeft < ((-position + containerSize))) isVisibile = true;
                 if (_slideLeft < -position && _slideRight > ((-position + containerSize))) isVisibile = true;
-                if (_slideLeft >= -position && _slideLeft < ((-position + containerSize)) && _slideRight <= ((-position + containerSize))
-                  ||(_slideRight > -position && _slideRight <= ((-position + containerSize)))) {
+                if (_slideLeft >= -position && _slideLeft < ((-position + containerSize)) && _slideRight <= ((-position + containerSize))) {
                     fullVisibleSlides.push(_this.slides[i]);
                 }
             }
